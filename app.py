@@ -63,7 +63,8 @@ def load_user(user_id):
 @app.route('/')
 @app.route('/home')
 def index():
-    return render_template("index.html")
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("index.html", articles=articles)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -119,6 +120,7 @@ def about():
 
 
 @app.route('/posts')
+@login_required
 def posts():
     articles = Article.query.order_by(Article.date.desc()).all()
     return render_template("posts.html", articles=articles)

@@ -16,9 +16,9 @@
       </a>
 
       <ul class="nav nav-pills">
-        <li class="nav-item"><a href="/posts" class="nav-link active" aria-current="page" style="background: orange; color: black">Blogs</a></li>
-        <li class="nav-item"><a href="/create-article" class="nav-link" style="color: black">Create blog</a></li>
-        <li class="nav-item"><a href="/about" class="nav-link" style="color: black">About</a></li>
+        <li class="nav-item"><a href="/posts" class="nav-link active" aria-current="page" style="background: orange; color: black">Мои статьи</a></li>
+        <li class="nav-item"><a href="/create-article" class="nav-link" style="color: black">Написать статью</a></li>
+        <li class="nav-item"><a href="/about" class="nav-link" style="color: black">О нас</a></li>
         {% if current_user.is_authenticated %}
             <li class="nav-item"><a href="{{ url_for('logout') }}" class="nav-link" style="color: black">Выход</a></li>
         {% else %}
