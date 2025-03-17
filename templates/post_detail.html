@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ article.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>{{ article.title }}</h1>
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+        <p>{{ article.text }}</p>
+        <p><b>{{ article.date.date() }}</b></p>
+
+        {% if article.user_id == current_user.id %}
+            <a href="/posts/{{ article.id }}/delete" class="btn btn-danger">Удалить</a>
+            <a href="/posts/{{ article.id }}/update" class="btn btn-success">Редактировать</a>
+        {% endif %}
+    </div>
+
+    <h2>Комментарии</h2>
+
+    <!-- Форма для добавления комментария -->
+    <form action="/posts/{{ article.id }}/comment" method="POST">
+        <div class="mb-3">
+            <label for="text" class="form-label">Оставьте комментарий:</label>
+            <textarea id="text" name="text" class="form-control" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить комментарий</button>
+    </form>
+
+    <div class="mt-4">
+        {% for comment in article.comments %}
+            <div class="border p-3 mb-3">
+                <p><b>{{ comment.user.username }}</b> - <i>{{ comment.date.date() }}</i></p>
+                <p>{{ comment.text }}</p>
+
+                {% if comment.user_id == current_user.id %}
+                    <a href="/posts/{{ article.id }}/comment/{{ comment.id }}/edit" class="btn btn-warning btn-sm">Редактировать</a>
+                    <form action="/posts/{{ article.id }}/comment/{{ comment.id }}/delete" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>Нет комментариев.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
